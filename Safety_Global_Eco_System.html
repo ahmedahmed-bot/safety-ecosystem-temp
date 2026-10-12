@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>The Safety Global Eco-System</title>
+  <style>
+    :root{--bg:#070a11;--panel:#101621;--panel2:#151d2b;--line:#29364a;--text:#f7f9fc;--muted:#8f9db2;--blue:#4d8fff;--red:#ff5262;--amber:#ffb323;--green:#2fd595;--purple:#9d83ff}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 18% 0,#1a2540 0,#0b101a 38%,#07090e 100%);color:var(--text);font-family:Arial,sans-serif}button,input,select,textarea{font:inherit}.hidden{display:none!important}
+    .loading{min-height:100vh;display:grid;place-items:center;text-align:center}.spinner{width:46px;height:46px;border:4px solid #263249;border-top-color:var(--blue);border-radius:50%;margin:auto;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+    .page{max-width:1720px;margin:auto;padding:20px 28px 42px;transition:margin .32s cubic-bezier(.2,.8,.2,1),padding .32s cubic-bezier(.2,.8,.2,1)}.page.drawer-open{margin-right:min(50vw,760px);max-width:none;padding-right:18px}@keyframes drawerIn{from{transform:translateX(60px);opacity:0}to{transform:translateX(0);opacity:1}}.header{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:17px}.brand-wrap{display:flex;align-items:center;gap:17px;min-width:0}.logos{display:flex;gap:9px;align-items:center;padding-right:16px;border-right:1px solid var(--line)}.logos img{height:46px;max-width:155px;object-fit:contain;background:transparent;padding:0;border-radius:0;filter:none;mix-blend-mode:normal}.lyft-logo{height:44px!important;max-width:110px!important;object-fit:contain;background:transparent!important;padding:0!important;border:0!important}.brand h1{font-size:38px}.header-date{color:#d9e4f4;font-size:12px;display:flex;align-items:flex-start;gap:10px}.user-time{min-width:200px;border:0;border-left:1px solid #334057;background:transparent;border-radius:0;padding:11px 14px;line-height:1.25}.time-icon{width:44px;height:44px;color:#a6b4c8;flex:0 0 44px;display:grid;place-items:center}.time-icon svg{width:34px!important;height:34px!important}.time-stack{display:grid;grid-template-rows:auto auto auto;row-gap:4px;align-content:center}.time-date{color:#a6b4c8;font-size:12px;line-height:1.15}.time-clock{color:#fff;font-size:17px;font-weight:900;line-height:1.15}.time-zone{color:#8fb7ff;font-size:12px;line-height:1.15}.header-date svg{width:15px;height:15px;stroke:#8fb7ff}.brand h1{margin:0;font-size:38px;letter-spacing:.2px;line-height:1.05}.brand p{margin:7px 0 0;color:var(--muted);font-size:13px}.user-actions{display:flex;align-items:stretch;gap:9px}.identity-time-card{display:flex;align-items:stretch;border:1px solid var(--line);background:linear-gradient(145deg,#161f2e,#101621);border-radius:13px;box-shadow:0 12px 34px #0006;overflow:hidden}.user-card{min-width:240px;border:0!important;background:transparent!important;box-shadow:none!important;border-radius:0!important;padding:12px 16px;border:1px solid var(--line);background:linear-gradient(145deg,#161f2e,#101621);border-radius:13px;box-shadow:0 12px 34px #0006}.user-card .welcome{display:block;color:var(--muted);font-size:11px;margin-bottom:4px}.user-card strong{display:block}.refresh-btn{width:48px;border:1px solid #31588f;background:#10233e;color:#77adff;border-radius:13px;display:grid;place-items:center;cursor:pointer}.refresh-btn:hover{background:#17345b}.refresh-btn svg{width:22px;height:22px;stroke:currentColor}.role{display:inline-block;margin-top:6px;padding:4px 8px;border-radius:999px;background:#203d6f;color:#b9d0ff;font-size:11px;font-weight:800}
+    .module-row{margin:4px 0 16px}.module{padding:14px 30px;border:1px solid #5597ff;background:linear-gradient(135deg,#1d4e97,#2871dc);color:white;border-radius:11px;font-size:16px;font-weight:800;box-shadow:0 9px 26px #1b5fd844}
+    .summary{display:grid;grid-template-columns:repeat(4,1fr) 1.25fr;gap:10px;margin-bottom:12px}.metric{border:1px solid var(--line);background:linear-gradient(145deg,var(--panel2),var(--panel));border-radius:13px;padding:15px}.chart{border:0;background:transparent;padding:5px 12px;display:flex;align-items:center}.metric{position:relative}.metric span{display:block;color:#c9d3e2;font-size:14px;font-weight:700}.metric b{display:block;font-size:28px;margin-top:8px}.metric small{display:block;color:#9dacbf;font-size:12px;margin-top:5px}.metric-icon{position:absolute;right:14px;top:13px;width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:#1c2e4d;color:#9bc0ff;font-size:17px}.metric.pending .metric-icon{background:#431820;color:#ff8f9b}.metric.progress .metric-icon{background:#433317;color:#ffc762}.metric.completed .metric-icon{background:#123b2e;color:#6ce4b6}.metric.pending{border-color:#652632}.metric.pending b{color:#ff7f8b}.metric.progress{border-color:#62491e}.metric.progress b{color:#ffc762}.metric.completed{border-color:#1d6149}.metric.completed b{color:#66e5b6}.chart-inner{display:flex;align-items:center;gap:20px;width:100%;height:100%}.ring{width:112px;height:112px;flex:0 0 112px;border-radius:50%;display:grid;place-items:center;position:relative}.ring:after{content:"";position:absolute;inset:17px;background:#111824;border-radius:50%}.ring b{position:relative;z-index:1;font-size:23px;text-align:center;line-height:1.2}.ring b small{display:block;font-size:9px;color:#cbd5e1;font-weight:600;margin-top:2px}.legend{color:#d8e1ee;font-size:12px;line-height:1.7;min-width:150px}.legend-row{display:grid;grid-template-columns:10px 1fr auto;gap:7px;align-items:center;margin:5px 0}.legend-dot{width:9px;height:9px;border-radius:50%}.legend-count{font-variant-numeric:tabular-nums;color:#fff;font-weight:800}
+    .toolbar{display:flex;align-items:center;gap:7px;flex-wrap:wrap;background:#0d131d;border:1px solid var(--line);border-radius:13px;padding:10px;margin-bottom:11px}.control,.filter-btn{background:#141c29;border:1px solid var(--line);color:white;border-radius:9px;padding:9px 10px;outline:none}.search{width:190px;padding-left:34px!important}.search-wrap{position:relative;display:inline-flex;align-items:center;color:#9fc0ed}.search-icon{position:absolute;left:10px;width:16px;height:16px;z-index:2;pointer-events:none}.search-wrap>input{color:#fff;cursor:text;pointer-events:auto;position:relative;z-index:1}.search-wrap{min-width:190px}.month-wrap{position:relative;display:inline-flex;align-items:center}.month-icon{position:absolute;left:9px;width:16px;height:16px;color:#9fc0ed;pointer-events:none}.month-wrap select{padding-left:31px}.filter-btn{cursor:pointer;font-weight:700}.filter-btn.pending{border-color:#7b313c;background:transparent;color:#ff8f9b}.filter-btn.progress{border-color:#7a5a26;background:transparent;color:#ffc762}.filter-btn.completed{border-color:#277158;background:transparent;color:#6ce4b6}.filter-btn.all{border-color:#3a639f;background:transparent;color:#aecdff}.filter-btn.group{border-color:#554d76;background:transparent;color:#c8bcff}.filter-btn.all.active{border-color:var(--blue);background:#18345d}.filter-btn.pending.active{border-color:var(--red);background:#491921;color:#ff9ba5}.filter-btn.progress.active{border-color:var(--amber);background:#493718;color:#ffd177}.filter-btn.completed.active{border-color:var(--green);background:#153f31;color:#80e9bf}.filter-btn.group.active{border-color:var(--purple);background:#30265a;color:#d1c6ff}
+    .queue{display:grid;gap:8px}.ticket{background:linear-gradient(145deg,#111824,#0d121b);border:1px solid var(--line);border-left:4px solid #58667b;border-radius:11px;padding:12px 14px;display:grid;grid-template-columns:105px minmax(200px,1.45fr) 120px 90px 90px 96px;gap:10px;align-items:center}.ticket.pending{border-left-color:var(--red)}.ticket.progress{border-left-color:var(--amber)}.ticket.completed{border-left-color:var(--green)}.cell{min-width:0}.label{display:block;color:#b8c4d6;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}.value{display:block;color:white;font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ticket-id{font-variant-numeric:tabular-nums;letter-spacing:.1px}.sub-ticket{display:block;color:#dbe5f3;font-size:15px;font-weight:400;margin-top:4px;font-variant-numeric:tabular-nums}.score .value{font-size:17px;font-weight:900}.badge{display:inline-block;border-radius:6px;padding:6px 9px;font-size:12px;font-weight:900;letter-spacing:.25px}.badge.PENDING{background:#4a171f;color:#ff8d99}.badge.IN_PROGRESS{background:#493718;color:#ffc762}.badge.COMPLETED{background:#133f30;color:#6ce4b6}.action{padding:9px 13px;border-radius:8px;font-weight:800;cursor:pointer}.action.start{border:0;background:#1673ee;color:white}.action.continue{border:1px solid #2c83bb;background:#123653;color:#73d2ff}.action.view{border:1px solid #49627f;background:transparent;color:#c8d5e7}
+    .agent-group{display:grid;gap:7px}.group-head{background:#121a27;border:1px solid var(--line);border-radius:11px;padding:11px 14px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;cursor:pointer}.group-head strong{color:white;font-size:16px;margin-right:8px;min-width:190px}.group-spacer{flex:1}.group-summary{color:#aecdff;font-size:16px;font-weight:900;padding:5px 10px;border:1px solid #365d95;border-radius:999px;background:#101c30}.gstat{font-size:13px;font-weight:800;padding:5px 8px;border-radius:999px}.gstat.red{background:#4a171f;color:#ff8d99}.gstat.amber{background:#493718;color:#ffc762}.gstat.green{background:#133f30;color:#6ce4b6}.gstat.total{background:#20314d;color:#cfddf4}.group-body{display:grid;gap:7px;padding:0 0 3px 18px}
+    .overlay{position:fixed;inset:0;background:#0005;z-index:20}.workspace{position:fixed;right:18px;top:18px;bottom:18px;width:min(50vw,760px);animation:drawerIn .32s cubic-bezier(.2,.8,.2,1);z-index:21;background:#090e17;border:1px solid #354560;border-radius:16px;overflow:hidden;display:grid;grid-template-rows:auto 1fr auto;box-shadow:0 30px 90px #000b}.whead{display:flex;justify-content:space-between;align-items:center;padding:15px 20px;border-bottom:1px solid var(--line)}.whead h2{margin:6px 0 0}.close{width:35px;height:35px;border:0;border-radius:50%;background:#1c2636;color:white;font-size:21px;cursor:pointer}.wbody{display:grid;grid-template-columns:34% 66%;overflow:auto}.context{background:#0c121c;border-right:1px solid var(--line);padding:18px}.ticket-info-card{border:1px solid #29364a;background:#0f1723;border-radius:13px;padding:12px;display:grid;gap:7px}.context-title{font-size:15px;margin:0 0 10px;color:#fff}.context-grid{display:grid;grid-template-columns:1fr;gap:8px}.composite-box{margin-top:12px;border:1px solid #35527c;background:linear-gradient(135deg,#12233d,#101824);border-radius:11px;padding:14px}.composite-box span{color:#94a6bd;font-size:10px;text-transform:uppercase}.composite-box b{display:block;font-size:25px;margin-top:5px;color:#fff}.info{display:grid;grid-template-columns:38px 1fr;gap:10px;align-items:center;border:0!important;background:transparent!important;padding:5px 2px!important}.info+.info{border-top:1px solid #202c3e!important;padding-top:9px!important}.info-icon{width:34px;height:34px;border-radius:7px;background:#16263d;display:grid;place-items:center;color:#9fc0ed;font-size:12px}.info{border:1px solid #26334a;background:#121a28;border-radius:9px;padding:10px}.info span{display:block;color:var(--muted);font-size:10px}.info b{display:block;margin-top:4px;font-size:13px;word-break:break-word}.form{padding:18px 22px;overflow:auto}.field{margin-bottom:14px}.field label{display:block;font-size:13px;font-weight:800;margin-bottom:7px}.field-question{display:block;color:#9eacc0;font-size:11px;font-weight:500;margin-top:4px}.required{display:none;color:#ff8994}.field.invalid .required{display:inline}.input{width:100%;transition:.18s;min-height:42px;background:#101a28;border:1px solid #31445f;border-radius:9px;color:#eef5ff;padding:10px 12px;box-shadow:inset 0 1px rgba(255,255,255,.025)}select.input{appearance:auto}textarea.input{min-height:112px;resize:vertical;line-height:1.5}border:1px solid #31405a;background:#121a26;color:white;border-radius:9px;padding:10px;outline:none}.input.filled{background:#15271f;border-color:#2c7459}.field.invalid .input,.field.invalid .yn{border-color:var(--red);background:#35141a}.yn{display:grid;grid-template-columns:1fr 1fr;gap:6px;border-radius:9px}.yn button{border:1px solid #31405a;background:#121a26;color:#dce6f4;padding:10px;border-radius:9px;cursor:pointer}.yn button.selected{border-color:#5b96fa;background:#203b69;color:white}.northstar{display:grid;grid-template-columns:1fr 1fr;gap:9px}.northstar button{border:1px solid #31405a;background:#121a26;color:#dce6f4;padding:12px;border-radius:9px;text-align:left;cursor:pointer}.northstar button.yes.selected{border-color:#2fd595;background:#123f31;color:#7de9bf}.northstar button.no.selected{border-color:#ff5262;background:#481921;color:#ff9ba5}.north-note{font-size:11px;color:var(--muted);margin:-2px 0 8px}.metric-rca-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.metric-rca-card{background:#0f1723;border:1px solid #29364a;border-radius:11px;padding:12px;transition:.18s}.metric-rca-card.done{background:#11231f;border-color:#286b54}.metric-rca-card.done .scoreline strong{color:#74e9bd}.rca-inline-title{display:flex!important;align-items:center;gap:9px!important}.rca-inline-title>span{font-size:14px}.rca-inline-title>strong{margin-left:auto;font-size:18px;color:#80b5ff;background:#132a49;border:1px solid #315a91;padding:4px 9px;border-radius:8px}.rca-inline-title>.required{margin-left:0;font-style:normal}.metric-rca-card .scoreline strong{font-size:13px}.metric-rca-card .scoreline span{font-size:20px;font-weight:900;color:#80b5ff;background:#132a49;border:1px solid #315a91;padding:4px 9px;border-radius:8px}.metric-rca-card .field{margin-bottom:0}@media(max-width:700px){.metric-rca-grid,.northstar{grid-template-columns:1fr}}.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.tag{border:0;border-radius:999px;background:#273d68;color:#e2eaff;padding:6px 9px}.case-transition{position:fixed;inset:0;z-index:80;display:grid;place-items:center;background:#05080ed9;backdrop-filter:blur(5px)}.case-transition-card{border:1px solid #27684f;background:#10241d;color:#78e8bb;border-radius:15px;padding:24px 34px;text-align:center;box-shadow:0 20px 60px #0009}.case-transition-card b{display:block;font-size:18px;margin-bottom:5px}.actions{display:flex;align-items:center;gap:9px;padding:12px 20px;border-top:1px solid var(--line);background:#0d131e}.remaining{margin-right:auto;color:#ff8994;font-size:12px}.remaining.ready{color:#5ce1aa}.btn{border:0;border-radius:9px;padding:9px 13px;font-weight:800;cursor:pointer}.save{background:#26364d;color:#dce8f8}.submit{background:#3478eb;color:white}.submit:disabled{opacity:.4;cursor:not-allowed}
+    @media(max-width:1100px){.ticket{grid-template-columns:100px minmax(170px,1.5fr) minmax(170px,1.2fr) 120px 100px 120px 80px;gap:10px}.brand h1{font-size:30px}.logos img{max-width:90px}}
+    @media(max-width:860px){.header{align-items:flex-start}.summary{grid-template-columns:repeat(2,1fr)}.chart{grid-column:span 2}.ticket{grid-template-columns:1fr 1fr 1fr}.ticket .cell:first-child{grid-column:auto}.ticket .action{width:100%}.wbody{grid-template-columns:1fr}.context{border-right:0;border-bottom:1px solid var(--line)}.brand h1{font-size:25px}.user-card{min-width:190px}}
+  
+/* V1.01 layout and interaction enhancements */
+.page{width:100%;max-width:none;margin:0;padding-left:16px;padding-right:16px}
+.validator-inline{display:flex;align-items:center;gap:7px;margin-bottom:16px;font-size:13px}
+.validator-inline span{color:#f7f9fc;font-weight:800}.validator-inline strong{color:#8f9db2;font-weight:500}
+.copy-ticket{cursor:pointer;transition:color .15s ease,background .15s ease}.copy-ticket:hover{color:#8fbdff!important;text-decoration:underline;text-underline-offset:3px}.copy-ticket.copied{color:#6ce4b6!important}
+.ticket{grid-template-columns:135px minmax(150px,190px) minmax(170px,1fr) 120px 95px 100px 110px}
+.ticket-status-cell .badge{min-width:112px;text-align:center;white-space:nowrap}.agent-cell .value{max-width:190px}.ticket-number{font-size:15px;font-weight:400;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ticket .action{width:100%;min-width:100px;min-height:38px;display:inline-flex;align-items:center;justify-content:center;text-align:center;line-height:1;white-space:nowrap}
+.page.drawer-open .ticket{grid-template-columns:120px minmax(145px,1fr) 105px 88px 92px 105px;row-gap:5px}
+.page.drawer-open .ticket-status-cell{grid-row:1 / span 2}.page.drawer-open .agent-cell{grid-column:2;grid-row:1}.page.drawer-open .ticket-id-cell{grid-column:2;grid-row:2;margin-top:-7px}.page.drawer-open .ticket-id-cell .ticket-number{font-size:12px;color:#9eadc2}.page.drawer-open .ticket-date-cell{grid-column:3;grid-row:1 / span 2}.page.drawer-open .ticket-channel-cell{grid-column:4;grid-row:1 / span 2}.page.drawer-open .score{grid-column:5;grid-row:1 / span 2}.page.drawer-open .ticket .action{grid-column:6;grid-row:1 / span 2}
+.ticket-header-line{display:flex;align-items:center;gap:12px;min-width:0}.ticket-header-line h2{margin:0;font-size:18px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ticket-header-line .badge{flex-shrink:0}
+.validation-processing{margin:0 20px 12px;padding:12px 15px;border:1px solid #315d99;border-radius:10px;background:#10213a;color:#fff;display:none;align-items:center;gap:12px}.validation-processing.show{display:flex}.validation-processing.success{border-color:#28775b;background:#12362c}.validation-processing-icon{width:22px;height:22px;flex:0 0 22px;border:3px solid rgba(255,255,255,.25);border-top-color:#6fa8ff;border-radius:50%;animation:validationSpin .7s linear infinite}.validation-processing.success .validation-processing-icon{border:0;animation:none;width:24px;height:24px}.validation-processing.success .validation-processing-icon:before{content:"✓";display:block;color:#6ce4b6;font-size:24px;font-weight:900;line-height:24px}.validation-processing strong{display:block;font-size:13px}.validation-processing span{display:block;margin-top:3px;font-size:11px;color:#aebed4}.validation-processing.success strong{color:#79e8bd}@keyframes validationSpin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+  <div id="loading" class="loading"><div><div class="spinner"></div><h2>The Safety Global Eco-System</h2><p style="color:var(--muted)">Preparing your Validation Workspace...</p></div></div>
+  <div id="fatal" class="loading hidden"><div><h2 style="color:#ff7f8b">Unable to load</h2><p id="fatalText"></p></div></div>
+
+  <div id="app" class="page hidden">
+    <header class="header">
+      <div class="brand-wrap"><div class="logos"><img alt="Sutherland" src="https://www.sutherlandglobal.com/wp-content/uploads/sites/2/2023/08/sutherland-logo-colour.png"><img class="lyft-logo" alt="Lyft" src="https://cdn.dribbble.com/users/177405/screenshots/26506699/downloads/Lyft%20Vector%20with%20Lyft%20Pink.svg" onerror="this.style.display='none'"></div><div class="brand"><h1>The Safety Global Eco-System</h1><p id="workspaceName">Validation Workspace</p></div></div>
+      <div class="user-actions"><div class="identity-time-card"><div class="user-card"><span class="welcome">Welcome,</span><strong id="userName">User</strong><span id="roleName" class="role">Role</span></div><div id="localClock" class="header-date user-time"></div></div><button class="refresh-btn" onclick="refreshApp()" title="Refresh">↻</button></div>
+    </header>
+
+    <div class="module-row"><button class="module">Validation</button></div>
+
+    <section class="summary"><div class="metric"><i class="metric-icon">▤</i><span>Total tickets</span><b id="total">0</b><small id="totalNote">Selected month</small></div><div class="metric pending"><i class="metric-icon">!</i><span>Pending</span><b id="pending">0</b><small id="pendingNote">0% of total</small></div><div class="metric progress"><i class="metric-icon">◫</i><span>In progress</span><b id="progress">0</b><small id="progressNote">0% of total</small></div><div class="metric completed"><i class="metric-icon">✓</i><span>Completed</span><b id="completed">0</b><small id="completedNote">0% of total</small></div><div class="chart"><div class="chart-inner"><div id="ring" class="ring"><b><span id="rate">0%</span></b></div><div id="legend" class="legend"></div></div></div></section>
+
+    <section class="toolbar"><span class="month-wrap"><svg class="month-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/></svg><select id="month" class="control" onchange="applyFilters()"><option value="ALL">All months</option></select></span><button id="allBtn" class="filter-btn all active" onclick="setStatus('ALL')">● All</button><button id="pendingBtn" class="filter-btn pending" onclick="setStatus('PENDING')">● Pending</button><button id="progressBtn" class="filter-btn progress" onclick="setStatus('IN_PROGRESS')">● In progress</button><button id="completedBtn" class="filter-btn completed" onclick="setStatus('COMPLETED')">✓ Completed</button><button id="groupBtn" class="filter-btn group" onclick="toggleGroup()">♙ Group by agent</button><select id="agent" class="control" onchange="applyFilters()"><option value="ALL">Agent: All</option></select><select id="channel" class="control" onchange="applyFilters()"><option value="ALL">Channel: All</option></select><div class="search-wrap" title="Search tickets"><svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="search" class="control search" placeholder="Search ticket..." aria-label="Search ticket" oninput="applyFilters()"></div></section>
+
+    <div id="queue" class="queue"></div>
+  </div>
+
+  <div id="overlay" class="overlay hidden" onclick="closeTicket()"></div>
+  <section id="workspace" class="workspace hidden"><header class="whead"><div class="ticket-header-line"><span id="wStatus" class="badge PENDING">PENDING</span><h2 id="wTitle">Ticket</h2></div><button class="close" onclick="closeTicket()">&times;</button></header><div class="wbody"><aside class="context"><h3 class="context-title">Interaction Details</h3><div class="ticket-info-card"><div id="contextGrid" class="context-grid"></div></div><div id="compositeCard" class="composite-box"></div></aside><main id="form" class="form"></main></div><div id="validationProcessing" class="validation-processing"><div class="validation-processing-icon"></div><div><strong id="validationProcessingTitle">Applying validation...</strong><span id="validationProcessingText">Updating the ticket and saving your validation.</span></div></div><footer class="actions"><span id="remaining" class="remaining"></span><button class="btn save" onclick="saveValidation(false,false)">Save Draft</button><button id="submitBtn" class="btn submit" onclick="saveValidation(true,true)">Submit &amp; Next</button></footer></section>
+
+  <script>
+    var APP={user:null,reference:null,tickets:[],filtered:[],status:'ALL',group:false,ticketId:'',rca3:[]};
+    window.onload=function(){google.script.run.withSuccessHandler(bootOk).withFailureHandler(bootFail).getBootstrapData();};
+    function E(id){return document.getElementById(id)}
+    function S(v){return v===null||v===undefined?'':String(v)}
+    function esc(v){return S(v).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+    function copyTicketId(ticketId,el){var value=S(ticketId).trim();if(!value)return;function done(){if(el){el.classList.add('copied');var old=el.getAttribute('title')||'';el.setAttribute('title','Copied!');setTimeout(function(){el.classList.remove('copied');el.setAttribute('title',old||'Click to copy ticket ID')},1000)}}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(value).then(done).catch(function(){fallbackCopyTicketId(value,done)})}else fallbackCopyTicketId(value,done)}
+    function fallbackCopyTicketId(value,done){var a=document.createElement('textarea');a.value=value;a.setAttribute('readonly','');a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy');done()}finally{a.remove()}}
+    function errorText(e){return e&&e.message?e.message:String(e||'Unexpected error')}
+    function roleLabel(r){return r==='TM'?'Team Manager':r==='STM'?'Senior Team Manager':r==='AM'?'Associate Manager':r==='AGENT'?'Agent':r}
+    function iconSvg(name){var m={user:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>',ticket:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h12v18H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>',calendar:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/></svg>',chat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg>',resolve:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>',money:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.7-1-4.5-1.2-5 1-.5 2.4 5.5 1.1 5 4-.4 2.2-4.3 2.1-5 1M12 7v10"/></svg>',repeat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4"/><path d="M21 13v2a3 3 0 0 1-3 3H3"/></svg>',sentiment:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>',clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>'};return m[name]||''}
+    function refreshApp(){E('loading').classList.remove('hidden');E('app').classList.add('hidden');google.script.run.withSuccessHandler(bootOk).withFailureHandler(bootFail).getBootstrapData()}
+    function userTimeZone(){try{return Intl.DateTimeFormat().resolvedOptions().timeZone||'UTC'}catch(e){return'UTC'}}
+    function updateLocalClock(){var x=E('localClock');if(!x)return;var now=new Date();x.innerHTML='<div class="time-icon">'+iconSvg('clock')+'</div><div class="time-stack"><span class="time-date">'+now.toLocaleDateString(undefined,{timeZone:userTimeZone(),weekday:'short',day:'2-digit',month:'short',year:'numeric'})+'</span><strong class="time-clock">'+now.toLocaleTimeString(undefined,{timeZone:userTimeZone(),hour:'2-digit',minute:'2-digit'})+'</strong><span class="time-zone">'+userTimeZone()+'</span></div>'}
+    function startLocalClock(){updateLocalClock();window.setInterval(updateLocalClock,1000)}
+
+    function bootOk(d){APP.user=d.user;APP.reference=d.reference;APP.tickets=d.tickets||[];E('userName').textContent=d.user.name;E('roleName').textContent=roleLabel(d.user.role);fillFilters();applyFilters();startLocalClock();E('loading').classList.add('hidden');E('app').classList.remove('hidden')}
+    function bootFail(e){E('loading').classList.add('hidden');E('fatal').classList.remove('hidden');E('fatalText').textContent=errorText(e)}
+
+    function monthKey(t){return S(t.dateSort).slice(0,7)}
+    function monthLabel(k){if(!k)return'';var p=k.split('-'),d=new Date(Number(p[0]),Number(p[1])-1,1);return d.toLocaleDateString(undefined,{month:'long',year:'numeric'})}
+    function fillFilters(){var mm={},aa={},cc={},i,t,m=E('month').value||'ALL',a=E('agent').value||'ALL',ch=E('channel').value||'ALL',mk,ak,ck,h;for(i=0;i<APP.tickets.length;i++){t=APP.tickets[i];if(monthKey(t))mm[monthKey(t)]=1;if(t.agentName)aa[t.agentName]=1;if(t.channel)cc[t.channel]=1}mk=Object.keys(mm).sort().reverse();ak=Object.keys(aa).sort();ck=Object.keys(cc).sort();h='<option value="ALL">All months</option>';for(i=0;i<mk.length;i++)h+='<option value="'+mk[i]+'">'+esc(monthLabel(mk[i]))+'</option>';E('month').innerHTML=h;if(m!=='ALL')E('month').value=m;h='<option value="ALL">All agents</option>';for(i=0;i<ak.length;i++)h+='<option>'+esc(ak[i])+'</option>';E('agent').innerHTML=h;if(a!=='ALL')E('agent').value=a;h='<option value="ALL">Channel: All</option>';for(i=0;i<ck.length;i++)h+='<option>'+esc(ck[i])+'</option>';E('channel').innerHTML=h;if(ch!=='ALL')E('channel').value=ch}
+
+    function monthScope(){var m=E('month').value,o=[],i;for(i=0;i<APP.tickets.length;i++)if(m==='ALL'||monthKey(APP.tickets[i])===m)o.push(APP.tickets[i]);return o}
+    function listScope(){var base=monthScope(),q=S(E('search').value).toLowerCase().trim(),a=E('agent').value,ch=E('channel').value,o=[],i,t,text;for(i=0;i<base.length;i++){t=base[i];if(a!=='ALL'&&t.agentName!==a)continue;if(ch!=='ALL'&&t.channel!==ch)continue;if(APP.status!=='ALL'&&t.status!==APP.status)continue;text=[t.ticketId,t.agentName,t.channel,t.compositeScore].join(' ').toLowerCase();if(q&&text.indexOf(q)===-1)continue;o.push(t)}return o}
+    function applyFilters(){APP.filtered=listScope();renderSummary(monthScope());renderFilterCounts();renderQueue()}
+    function setStatus(s){APP.status=s;['allBtn','pendingBtn','progressBtn','completedBtn'].forEach(function(x){E(x).classList.remove('active')});E(s==='ALL'?'allBtn':s==='PENDING'?'pendingBtn':s==='IN_PROGRESS'?'progressBtn':'completedBtn').classList.add('active');applyFilters()}
+    function toggleGroup(){APP.group=!APP.group;E('groupBtn').classList.toggle('active');renderQueue()}
+
+    function count(list){var x={total:list.length,pending:0,inProgress:0,completed:0},i;for(i=0;i<list.length;i++){if(list[i].status==='COMPLETED')x.completed++;else if(list[i].status==='IN_PROGRESS')x.inProgress++;else x.pending++}return x}
+    function renderSummary(list){var x=count(list),tot=x.total||1,c=x.completed/tot*100,p=c+x.inProgress/tot*100;E('total').textContent=x.total;E('pending').textContent=x.pending;E('progress').textContent=x.inProgress;E('completed').textContent=x.completed;E('rate').textContent=Math.round(c)+'%';E('totalNote').textContent=E('month').value==='ALL'?'All available months':E('month').options[E('month').selectedIndex].text;E('pendingNote').textContent=Math.round(x.pending/tot*100)+'% of total';E('progressNote').textContent=Math.round(x.inProgress/tot*100)+'% of total';E('completedNote').textContent=Math.round(x.completed/tot*100)+'% of total';E('ring').style.background='conic-gradient(var(--green) 0 '+c+'%,var(--amber) '+c+'% '+p+'%,var(--red) '+p+'% 100%)';E('legend').innerHTML='<div class="legend-row"><i class="legend-dot" style="background:var(--green)"></i><span>Completed</span><span class="legend-count">'+x.completed+' ('+Math.round(x.completed/tot*100)+'%)</span></div><div class="legend-row"><i class="legend-dot" style="background:var(--amber)"></i><span>In Progress</span><span class="legend-count">'+x.inProgress+' ('+Math.round(x.inProgress/tot*100)+'%)</span></div><div class="legend-row"><i class="legend-dot" style="background:var(--red)"></i><span>Pending</span><span class="legend-count">'+x.pending+' ('+Math.round(x.pending/tot*100)+'%)</span></div>'}
+    function renderFilterCounts(){var base=monthScope(),a=E('agent').value,ch=E('channel').value,q=S(E('search').value).toLowerCase().trim(),o=[],i,t,text;for(i=0;i<base.length;i++){t=base[i];if(a!=='ALL'&&t.agentName!==a)continue;if(ch!=='ALL'&&t.channel!==ch)continue;text=[t.ticketId,t.agentName,t.channel,t.compositeScore].join(' ').toLowerCase();if(q&&text.indexOf(q)===-1)continue;o.push(t)}var x=count(o);E('allBtn').textContent='● All '+x.total;E('pendingBtn').textContent='● Pending '+x.pending;E('progressBtn').textContent='● In progress '+x.inProgress;E('completedBtn').textContent='✓ Completed '+x.completed}
+
+    function statusClass(s){return s==='PENDING'?'pending':s==='IN_PROGRESS'?'progress':'completed'}
+    function statusText(s){return s==='PENDING'?'PENDING':s==='IN_PROGRESS'?'IN PROGRESS':'COMPLETED'}
+    function ticketIndex(id){var i;for(i=0;i<APP.tickets.length;i++)if(String(APP.tickets[i].ticketId)===String(id))return i;return-1}
+    function ticketHtml(t){var i=ticketIndex(t.ticketId),ac=t.status==='PENDING'?'start':t.status==='IN_PROGRESS'?'continue':'view',at=t.status==='PENDING'?'Start':t.status==='IN_PROGRESS'?'Continue':'View';return '<article class="ticket '+statusClass(t.status)+'"><div class="cell ticket-status-cell"><span class="badge '+t.status+'">'+statusText(t.status)+'</span></div><div class="cell agent-cell"><span class="value">'+esc(t.agentName)+'</span></div><div class="cell ticket-id-cell"><span class="value ticket-number copy-ticket" data-ticket-id="'+esc(t.ticketId)+'" title="Click to copy ticket ID" onclick="event.stopPropagation();copyTicketId(this.getAttribute(\'data-ticket-id\'),this)">'+esc(t.ticketId)+'</span></div><div class="cell ticket-date-cell"><span class="value">'+esc(t.date)+'</span></div><div class="cell ticket-channel-cell"><span class="value">'+esc(t.channel)+'</span></div><div class="cell score"><span class="value">'+esc(t.compositeScore)+'</span></div><button class="action '+ac+'" onclick="openTicket('+i+')">'+at+'</button></article>'}
+    function groups(list){var m={},o=[],i,k,x;for(i=0;i<list.length;i++){k=list[i].agentName||'Unknown';if(!m[k])m[k]=[];m[k].push(list[i])}Object.keys(m).sort().forEach(function(k){x=count(m[k]);o.push({name:k,tickets:m[k],pending:x.pending,inProgress:x.inProgress,completed:x.completed})});return o}
+    function renderQueue(){var h='',i,g,stats;if(!APP.group){for(i=0;i<APP.filtered.length;i++)h+=ticketHtml(APP.filtered[i]);E('queue').innerHTML=h||'<div class="metric"><span>No tickets match these filters.</span></div>';return}g=groups(APP.filtered);for(i=0;i<g.length;i++){stats='';if(g[i].pending)stats+='<span class="gstat red">'+g[i].pending+' Pending</span>';if(g[i].inProgress)stats+='<span class="gstat amber">'+g[i].inProgress+' In Progress</span>';if(g[i].completed)stats+='<span class="gstat green">'+g[i].completed+' Completed</span>';stats+='<span class="group-spacer"></span><span class="group-summary">'+g[i].tickets.length+' total tickets</span>';h+='<div class="agent-group"><div class="group-head" onclick="toggleAgent(\'agent'+i+'\')"><strong>'+esc(g[i].name)+'</strong>'+stats+'</div><div id="agent'+i+'" class="group-body hidden">'+g[i].tickets.map(ticketHtml).join('')+'</div></div>'}E('queue').innerHTML=h||'<div class="metric"><span>No tickets match these filters.</span></div>'}
+    function toggleAgent(id){E(id).classList.toggle('hidden')}
+
+    function info(a,b,icon){return '<div class="info"><i class="info-icon">'+iconSvg(icon)+'</i><div><span>'+esc(a)+'</span><b>'+esc(b||'-')+'</b></div></div>'}
+    function compactInfo(value,icon,isTicket){var b=isTicket?'<b class="copy-ticket" data-ticket-id="'+esc(value)+'" title="Click to copy ticket ID" onclick="event.stopPropagation();copyTicketId(this.getAttribute(\'data-ticket-id\'),this)">'+esc(value||'-')+'</b>':'<b>'+esc(value||'-')+'</b>';return '<div class="info compact"><i class="info-icon">'+iconSvg(icon)+'</i><div>'+b+'</div></div>'}
+    function fld(id,label,html){return '<div id="f-'+id+'" class="field"><label>'+label+'<span class="required">Required</span></label>'+html+'</div>'}
+    function northStarField(v){return '<div id="f-northStar" class="field"><label>Is this a North Star interaction?<span class="required">Required</span></label><div class="north-note">In case Yes, please mention the reasons in details in the comments section.</div><div id="northStar" class="northstar"><button type="button" data-v="Yes - North Star Interaction" class="yes '+(v==='Yes - North Star Interaction'?'selected':'')+'" onclick="pickNorthStar(\'Yes - North Star Interaction\')">Yes - North Star Interaction</button><button type="button" data-v="Not a North Star Interaction" class="no '+(v==='Not a North Star Interaction'?'selected':'')+'" onclick="pickNorthStar(\'Not a North Star Interaction\')">Not a North Star Interaction</button></div></div>'}
+    function selectField(id,label,optionsKey,current){return fld(id,label,'<select id="'+id+'" class="input" onchange="validateLive(false)">'+optionsHtml(APP.reference[optionsKey]||[],current,'Select '+label)+'</select>')}
+    function optionsHtml(options,current,placeholder){var h='<option value="">'+esc(placeholder)+'</option>',i;for(i=0;i<options.length;i++)h+='<option value="'+esc(options[i])+'"'+(options[i]===current?' selected':'')+'>'+esc(options[i])+'</option>';return h}
+    function softOptionsHtml(current){var positive='Positive -> Agent performed good',opts=(APP.reference.softSkillOptions||[]).slice(),out=[positive],i;for(i=0;i<opts.length;i++)if(S(opts[i]).trim()!==positive)out.push(opts[i]);return optionsHtml(out,current,'Select soft skills gap')}
+    function metricRcaCard(id,title,score,optionsKey,current){return '<div class="metric-rca-card"><div id="f-'+id+'" class="field"><label class="rca-inline-title"><span>'+esc(title)+' RCA</span><strong>'+esc(score||'-')+'</strong><em class="required">Required</em></label><select id="'+id+'" class="input" onchange="validateLive(false)">'+optionsHtml(APP.reference[optionsKey]||[],current,'Select '+title+' RCA')+'</select></div></div>'}
+    function formHtml(t,v){return '<h3>Validation</h3><div class="validator-inline"><span>Validator Name:</span><strong>'+esc(APP.user.name||'')+'</strong></div>'+northStarField(v.northStar||'')+fld('soft','Does the Agent have a soft skills gap in the scrubbed interaction?','<select id="soft" class="input" onchange="validateLive(false)">'+softOptionsHtml(v.softSkillGap||'')+'</select>')+'<div class="metric-rca-grid">'+metricRcaCard('resolveRca','Resolve',t.resolve,'resolveRcaOptions',v.resolveRca||'')+metricRcaCard('concessionsRca','Concessions',t.concessions,'concessionsRcaOptions',v.concessionsRca||'')+metricRcaCard('sentimentRca','Sentiment',t.sentiment,'sentimentRcaOptions',v.sentimentRca||'')+metricRcaCard('fcrRca','FCR',t.fcr,'fcrRcaOptions',v.fcrRca||'')+'</div>'+fld('comment','Comment','<textarea id="comment" class="input" rows="5" placeholder="Enter your comment here..." oninput="updateCommentGuidance();validateLive(false)">'+esc(v.comment||'')+'</textarea><div id="commentGuidance" class="north-note"></div>')}
+    function openTicket(i){var t=APP.tickets[i],v=t.validation||{};APP.ticketId=String(t.ticketId);E('wStatus').className='badge '+t.status;E('wStatus').textContent=statusText(t.status);E('wTitle').innerHTML='Ticket <span class="copy-ticket" data-ticket-id="'+esc(t.ticketId)+'" title="Click to copy ticket ID" onclick="event.stopPropagation();copyTicketId(this.getAttribute(\'data-ticket-id\'),this)">'+esc(t.ticketId)+'</span>';E('contextGrid').innerHTML=compactInfo(t.agentName,'user')+compactInfo(t.ticketId,'ticket',true)+compactInfo(t.date,'calendar')+compactInfo(t.channel,'chat');E('compositeCard').innerHTML='<span>Composite Score</span><b>'+esc(t.compositeScore||'-')+'</b>';E('form').innerHTML=formHtml(t,v);E('overlay').classList.remove('hidden');E('workspace').classList.remove('hidden');E('app').classList.add('drawer-open');updateCommentGuidance();validateLive(false)}
+    function selectedNorthStar(){var b=E('northStar').getElementsByTagName('button'),i;for(i=0;i<b.length;i++)if(b[i].classList.contains('selected'))return b[i].getAttribute('data-v')||'';return''}
+    function pickNorthStar(v){var b=E('northStar').getElementsByTagName('button'),i;for(i=0;i<b.length;i++)b[i].classList.toggle('selected',b[i].getAttribute('data-v')===v);updateCommentGuidance();validateLive(false)}
+    function updateCommentGuidance(){var x=E('commentGuidance');if(!x)return;x.textContent=selectedNorthStar()==='Yes - North Star Interaction'?'North Star selected: describe the reasons in detail in Comments.':''}
+    function closeTicket(){E('overlay').classList.add('hidden');E('workspace').classList.add('hidden');E('app').classList.remove('drawer-open');APP.ticketId=''}
+    function missing(){var a=[];if(!selectedNorthStar())a.push('northStar');if(!E('soft').value)a.push('soft');if(!E('resolveRca').value)a.push('resolveRca');if(!E('concessionsRca').value)a.push('concessionsRca');if(!E('sentimentRca').value)a.push('sentimentRca');if(!E('fcrRca').value)a.push('fcrRca');if(!S(E('comment').value).trim())a.push('comment');return a}
+    function validateLive(show){var m=missing(),ids=['northStar','soft','resolveRca','concessionsRca','sentimentRca','fcrRca','comment'],i;['soft','resolveRca','concessionsRca','sentimentRca','fcrRca','comment'].forEach(function(id){var x=E(id);if(x)x.classList.toggle('filled',S(x.value).trim()!=='')});['resolveRca','concessionsRca','sentimentRca','fcrRca'].forEach(function(id){var f=E('f-'+id);if(f&&f.parentElement)f.parentElement.classList.toggle('done',S(E(id).value).trim()!=='')});for(i=0;i<ids.length;i++)E('f-'+ids[i]).classList.toggle('invalid',show&&m.indexOf(ids[i])>=0);E('submitBtn').disabled=m.length>0;E('remaining').className='remaining '+(m.length?'':'ready');E('remaining').textContent=m.length?m.length+' required field'+(m.length===1?'':'s')+' remaining':'✓ Ready to submit'}
+    function current(){var i;for(i=0;i<APP.tickets.length;i++)if(String(APP.tickets[i].ticketId)===APP.ticketId)return APP.tickets[i];return null}
+    function payload(){var t=current();return{ticketId:t.ticketId,northStar:selectedNorthStar(),softSkillGap:E('soft').value,resolveRca:E('resolveRca').value,concessionsRca:E('concessionsRca').value,sentimentRca:E('sentimentRca').value,fcrRca:E('fcrRca').value,comment:E('comment').value}}
+    function saveValidation(sub,next){validateLive(sub);if(sub&&missing().length)return;var p=payload(),msg=E('validationProcessing'),title=E('validationProcessingTitle'),text=E('validationProcessingText');E('submitBtn').disabled=true;msg.classList.remove('success');msg.classList.add('show');title.textContent=sub?'Applying validation...':'Saving draft...';text.textContent=sub?'Updating the ticket and saving your validation.':'Saving your progress...';var r=google.script.run.withSuccessHandler(function(res){updateLocal(p,res);msg.classList.add('success');title.textContent=sub?'Validation applied successfully':'Draft saved successfully';text.textContent=next?'Opening the next ticket...':'Your changes have been saved.';setTimeout(function(){msg.classList.remove('show');msg.classList.remove('success');if(next)openNext(res.ticketId);else closeTicket()},next?2500:650)}).withFailureHandler(function(e){msg.classList.remove('show');msg.classList.remove('success');E('submitBtn').disabled=false;toast('Validation was not saved: '+errorText(e),true)});if(sub)r.submitValidation(p);else r.saveDraft(p)}
+    function updateLocal(p,res){var i=ticketIndex(p.ticketId),t=APP.tickets[i];t.validation={validatorName:APP.user.name,northStar:p.northStar,softSkillGap:p.softSkillGap,resolveRca:p.resolveRca,concessionsRca:p.concessionsRca,sentimentRca:p.sentimentRca,fcrRca:p.fcrRca,comment:p.comment};t.status=res.status||'COMPLETED';applyFilters()}
+    function openNext(prev){closeTicket();var i;for(i=0;i<APP.filtered.length;i++)if(String(APP.filtered[i].ticketId)!==String(prev)&&APP.filtered[i].status!=='COMPLETED'){openTicket(ticketIndex(APP.filtered[i].ticketId));return}}
+    function toast(msg,bad){var x=document.createElement('div');x.style.cssText='position:fixed;right:24px;bottom:24px;z-index:99;padding:12px 16px;border-radius:9px;color:white;background:'+(bad?'#b42318':'#146c4c');x.textContent=msg;document.body.appendChild(x);setTimeout(function(){x.remove()},3500)}
+  </script>
+<style>
+/* V1.01 safe enhancement layer */
+.page{width:100%;max-width:none;margin:0;padding-left:14px;padding-right:14px;transition:margin-right .38s cubic-bezier(.22,1,.36,1),padding-right .38s cubic-bezier(.22,1,.36,1)}
+.page.drawer-open{margin-right:calc(min(50vw,760px) + 18px);padding-right:10px}
+.logos{display:flex;align-items:center;gap:12px}.logo-divider{display:block;width:1px;height:38px;margin:0 3px;background:#56657a;color:transparent;flex:0 0 1px}.sutherland-logo{height:46px;max-width:155px;object-fit:contain}.lyft-logo{height:44px!important;max-width:110px!important;object-fit:contain}
+.validator-inline{display:flex;align-items:baseline;gap:7px;margin:0 0 16px;white-space:nowrap}.validator-inline-label{color:#f7f9fc;font-size:13px;font-weight:800}.validator-inline-name{color:#8492a8;font-size:13px;font-weight:800}
+.ticket-copy{display:inline-flex;align-items:center;gap:7px;width:max-content;padding:5px 8px;border:1px solid #344d6f;border-radius:7px;background:#111f32;color:#bdd6f6;font:600 12px/1 Consolas,"Courier New",monospace;cursor:pointer;user-select:none;transition:color .16s ease,background .16s ease,border-color .16s ease,transform .16s ease}.ticket-copy:hover{color:#fff;background:#172d4b;border-color:#4d8fff;transform:translateY(-1px)}.ticket-copy.copied{color:#79e8bd;background:#12362c;border-color:#28775b}.ticket-copy-number{white-space:nowrap}.ticket-copy-icon{width:15px;height:15px;flex:0 0 15px;fill:none;stroke:currentColor;stroke-width:1.8}
+.queue{width:100%;overflow-x:auto;overflow-y:visible}.ticket{width:100%;min-width:max-content;grid-template-columns:125px max-content max-content max-content max-content max-content 105px;justify-content:start;column-gap:22px;row-gap:4px;transition:column-gap .38s cubic-bezier(.22,1,.36,1),padding .38s cubic-bezier(.22,1,.36,1)}
+.ticket-status-cell{width:125px}.ticket-status-cell .badge{min-width:112px;text-align:center;white-space:nowrap}.ticket-agent-cell,.ticket-agent-cell .value,.ticket-id-cell,.ticket-date-cell,.ticket-channel-cell,.ticket-score-cell{width:max-content;min-width:max-content}.ticket-agent-cell .value{max-width:none;white-space:nowrap;overflow:visible;text-overflow:clip}.ticket-action{width:105px;min-width:105px;min-height:38px;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap}
+.page.drawer-open .ticket{grid-template-columns:120px max-content max-content max-content max-content 105px;column-gap:14px;row-gap:3px}.page.drawer-open .ticket-status-cell{grid-column:1;grid-row:1/span 2}.page.drawer-open .ticket-agent-cell{grid-column:2;grid-row:1}.page.drawer-open .ticket-id-cell{grid-column:2;grid-row:2}.page.drawer-open .ticket-date-cell{grid-column:3;grid-row:1/span 2}.page.drawer-open .ticket-channel-cell{grid-column:4;grid-row:1/span 2}.page.drawer-open .ticket-score-cell{grid-column:5;grid-row:1/span 2}.page.drawer-open .ticket-action{grid-column:6;grid-row:1/span 2}.page.drawer-open .ticket-id-cell .ticket-copy{padding:2px 5px;border-color:transparent;background:transparent;color:#92a5be;font-size:11px}
+.ticket-header-line .ticket-copy{padding:3px 6px;border-color:transparent;background:transparent;font-size:16px}.ticket-header-line .ticket-copy:hover{background:#15233a;border-color:#315d99}.context-ticket-id{color:#dbe5f3;font:600 12px/1.3 Consolas,"Courier New",monospace;white-space:normal;overflow-wrap:anywhere}
+.toolbar{gap:8px}#allBtn{margin-left:12px}#groupBtn{margin-left:12px}#agent{margin-left:12px}.search-wrap{margin-left:4px}
+@media(max-width:860px){.page.drawer-open{margin-right:0;padding-right:14px}.workspace{width:calc(100vw - 24px);right:12px}}
+</style>
+<script>
+(function(){
+  var logoBox=document.querySelector('.logos');if(logoBox){var imgs=logoBox.querySelectorAll('img');if(imgs[0]){imgs[0].classList.add('sutherland-logo');imgs[0].src='https://irp.cdn-website.com/76755cce/dms3rep/multi/super.svg'}if(imgs[1]){imgs[1].classList.add('lyft-logo')}var divider=logoBox.querySelector('.logo-divider');if(divider){divider.textContent=''}}
+  function copyIconSvg(){return '<svg class="ticket-copy-icon" viewBox="0 0 24 24"><rect x="8" y="8" width="11" height="11" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></svg>'}
+  window.ticketCopyHtml=function(ticketId){return '<span class="ticket-copy" data-ticket-id="'+esc(ticketId)+'" title="Click to copy ticket ID" onclick="event.stopPropagation();copyTicketId(this)"><span class="ticket-copy-number">'+esc(ticketId)+'</span>'+copyIconSvg()+'</span>'};
+  window.copyTicketId=function(element){var id=element.getAttribute('data-ticket-id'),number=element.querySelector('.ticket-copy-number');function done(){element.classList.add('copied');number.textContent='Copied!';setTimeout(function(){element.classList.remove('copied');number.textContent=id},1100)}function fallback(){var a=document.createElement('textarea');a.value=id;a.setAttribute('readonly','');a.style.position='fixed';a.style.left='-9999px';document.body.appendChild(a);a.select();document.execCommand('copy');a.remove();done()}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(id).then(done).catch(fallback)}else fallback()};
+  var originalBootOk=window.bootOk;
+  window.bootOk=function(d){originalBootOk(d);var button=document.querySelector('.module-row .module');if(button){button.classList.toggle('hidden',d.user.role==='AGENT')}E('workspaceName').textContent='Validation Workspace'};
+  window.formHtml=function(t,v){return '<h3>Validation</h3><div class="validator-inline"><span class="validator-inline-label">Validator Name:</span><strong class="validator-inline-name">'+esc(APP.user.name||'')+'</strong></div>'+northStarField(v.northStar||'')+fld('soft','Does the Agent have a soft skills gap in the scrubbed interaction?','<select id="soft" class="input" onchange="validateLive(false)">'+softOptionsHtml(v.softSkillGap||'')+'</select>')+'<div class="metric-rca-grid">'+metricRcaCard('resolveRca','Resolve',t.resolve,'resolveRcaOptions',v.resolveRca||'')+metricRcaCard('concessionsRca','Concessions',t.concessions,'concessionsRcaOptions',v.concessionsRca||'')+metricRcaCard('sentimentRca','Sentiment',t.sentiment,'sentimentRcaOptions',v.sentimentRca||'')+metricRcaCard('fcrRca','FCR',t.fcr,'fcrRcaOptions',v.fcrRca||'')+'</div>'+fld('comment','Comment','<textarea id="comment" class="input" rows="5" placeholder="Enter your comment here..." oninput="updateCommentGuidance();validateLive(false)">'+esc(v.comment||'')+'</textarea><div id="commentGuidance" class="north-note"></div>')};
+  window.ticketHtml=function(t){var i=ticketIndex(t.ticketId),ac=t.status==='PENDING'?'start':t.status==='IN_PROGRESS'?'continue':'view',at=t.status==='PENDING'?'Start':t.status==='IN_PROGRESS'?'Continue':'View';return '<article class="ticket '+statusClass(t.status)+'"><div class="cell ticket-status-cell"><span class="badge '+t.status+'">'+statusText(t.status)+'</span></div><div class="cell ticket-agent-cell"><span class="value" title="'+esc(t.agentName)+'">'+esc(t.agentName)+'</span></div><div class="cell ticket-id-cell">'+ticketCopyHtml(t.ticketId)+'</div><div class="cell ticket-date-cell"><span class="value">'+esc(t.date)+'</span></div><div class="cell ticket-channel-cell"><span class="value">'+esc(t.channel)+'</span></div><div class="cell score ticket-score-cell"><span class="value">'+esc(t.compositeScore)+'</span></div><button class="action ticket-action '+ac+'" onclick="openTicket('+i+')">'+at+'</button></article>'};
+  window.compactInfo=function(value,icon,isTicket){var c=isTicket?'<b class="context-ticket-id">'+esc(value||'-')+'</b>':'<b>'+esc(value||'-')+'</b>';return '<div class="info compact"><i class="info-icon">'+iconSvg(icon)+'</i><div>'+c+'</div></div>'};
+  window.openTicket=function(i){var t=APP.tickets[i],v=t.validation||{};APP.ticketId=String(t.ticketId);E('wStatus').className='badge '+t.status;E('wStatus').textContent=statusText(t.status);E('wTitle').innerHTML='Ticket '+ticketCopyHtml(t.ticketId);E('contextGrid').innerHTML=compactInfo(t.agentName,'user',false)+compactInfo(t.ticketId,'ticket',true)+compactInfo(t.date,'calendar',false)+compactInfo(t.channel,'chat',false);E('compositeCard').innerHTML='<span>Composite Score</span><b>'+esc(t.compositeScore||'-')+'</b>';E('form').innerHTML=formHtml(t,v);E('overlay').classList.remove('hidden');E('workspace').classList.remove('hidden');E('app').classList.add('drawer-open');updateCommentGuidance();validateLive(false)};
+})();
+</script>
+
+
+<style>
+/* V1.02 final visual refinement */
+.page{width:100%;max-width:none;margin:0;padding:20px 16px 42px;transition:margin-right .42s cubic-bezier(.22,1,.36,1),padding-right .42s cubic-bezier(.22,1,.36,1)}
+.page.drawer-open{margin-right:calc(min(50vw,760px) + 18px);padding-right:10px}
+
+/* Logos and separator */
+.logos{display:flex;align-items:center;gap:14px;padding-right:16px;border-right:1px solid var(--line)}
+.logo-divider{display:block!important;width:1px!important;height:38px!important;min-width:1px!important;margin:0 2px!important;background:#56657a!important;color:transparent!important;font-size:0!important;line-height:0!important}
+.sutherland-logo,.logos img:first-child{height:46px!important;width:auto!important;max-width:155px!important;object-fit:contain!important}
+.lyft-logo,.logos img:last-child{height:44px!important;width:auto!important;max-width:110px!important;object-fit:contain!important}
+
+/* Toolbar distributed across the available width */
+.toolbar{width:100%;display:grid;grid-template-columns:max-content repeat(4,max-content) max-content max-content max-content minmax(190px,1fr);align-items:center;column-gap:10px;row-gap:8px}
+.toolbar #allBtn,.toolbar #groupBtn,.toolbar #agent{margin-left:10px;padding-left:14px;position:relative}
+.toolbar #allBtn:before,.toolbar #groupBtn:before,.toolbar #agent:before{content:"";position:absolute;left:-6px;top:5px;bottom:5px;width:1px;background:#34445d}
+.toolbar .search-wrap{width:100%;min-width:190px;margin-left:0}.toolbar .search{width:100%}
+
+/* Proportional full-width ticket table */
+.queue{width:100%;overflow-x:auto;overflow-y:visible}
+.ticket{width:100%;min-width:980px;display:grid;grid-template-columns:125px minmax(220px,1.55fr) minmax(205px,1.25fr) minmax(125px,.72fr) minmax(95px,.55fr) minmax(80px,.45fr) 110px;justify-content:stretch;align-items:center;column-gap:14px;row-gap:4px;transition:grid-template-columns .42s cubic-bezier(.22,1,.36,1),column-gap .42s cubic-bezier(.22,1,.36,1),padding .42s cubic-bezier(.22,1,.36,1)}
+.ticket-status-cell{width:auto}.ticket-status-cell .badge{min-width:112px;text-align:center;white-space:nowrap}
+.ticket-agent-cell,.ticket-id-cell,.ticket-date-cell,.ticket-channel-cell,.ticket-score-cell{width:auto!important;min-width:0!important}
+.ticket-agent-cell .value{display:block;width:100%!important;max-width:none!important;white-space:nowrap!important;overflow:visible!important;text-overflow:clip!important}
+.ticket-id-cell .ticket-copy{width:fit-content;max-width:100%}.ticket-copy-number{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ticket-date-cell .value,.ticket-channel-cell .value,.ticket-score-cell .value{text-align:left}
+.ticket-action{width:110px;min-width:110px;justify-self:end}
+
+/* Contract and reflow when validation panel opens */
+.page.drawer-open .ticket{min-width:650px;grid-template-columns:115px minmax(185px,1.6fr) minmax(110px,.75fr) minmax(80px,.5fr) minmax(70px,.4fr) 105px;column-gap:10px;row-gap:3px}
+.page.drawer-open .ticket-status-cell{grid-column:1;grid-row:1/span 2}
+.page.drawer-open .ticket-agent-cell{grid-column:2;grid-row:1}
+.page.drawer-open .ticket-id-cell{grid-column:2;grid-row:2}
+.page.drawer-open .ticket-date-cell{grid-column:3;grid-row:1/span 2}
+.page.drawer-open .ticket-channel-cell{grid-column:4;grid-row:1/span 2}
+.page.drawer-open .ticket-score-cell{grid-column:5;grid-row:1/span 2}
+.page.drawer-open .ticket-action{grid-column:6;grid-row:1/span 2}
+.page.drawer-open .ticket-id-cell .ticket-copy{padding:2px 5px;border-color:transparent;background:transparent;color:#92a5be;font-size:11px}
+
+/* Header status, Ticket label, and ID at the same visual size */
+.ticket-header-line{display:flex;align-items:center;gap:10px;min-width:0}
+.ticket-header-line .badge{font-size:14px;line-height:18px;padding:6px 10px}
+.ticket-header-line h2{display:flex;align-items:center;gap:7px;margin:0!important;font-size:14px!important;line-height:18px!important;font-weight:900;white-space:nowrap;overflow:visible;text-overflow:clip}
+.ticket-header-line .ticket-copy{font-size:14px!important;line-height:18px;padding:5px 7px}
+
+/* Interaction Details ticket ID matches the rest of the details */
+.context-ticket-id{display:block!important;margin-top:4px!important;color:inherit!important;font-family:Arial,sans-serif!important;font-size:13px!important;font-weight:700!important;line-height:normal!important;white-space:normal!important;overflow-wrap:anywhere}
+
+@media(max-width:1200px){.toolbar{grid-template-columns:repeat(5,max-content) max-content max-content;}.toolbar .search-wrap{grid-column:1/-1}.ticket{min-width:920px;grid-template-columns:120px minmax(210px,1.5fr) minmax(190px,1.2fr) 120px 90px 75px 105px}}
+@media(max-width:860px){.page.drawer-open{margin-right:0;padding-right:16px}.workspace{width:calc(100vw - 24px);right:12px}.toolbar{display:flex;flex-wrap:wrap}.toolbar .search-wrap{flex:1 1 100%}}
+</style>
+
+<script>
+(function(){
+  document.addEventListener('keydown',function(event){
+    if(event.key==='Escape'&&!E('workspace').classList.contains('hidden')){
+      event.preventDefault();
+      closeTicket();
+    }
+  });
+})();
+</script>
+
+<style>
+/* V1.03 final corrections */
+
+/* Reliable separator between the two header logos */
+.logos .logo-divider{
+  display:none!important;
+}
+.logos img + .logo-divider + img,
+.logos img.lyft-logo{
+  border-left:1px solid #56657a!important;
+  padding-left:16px!important;
+  margin-left:2px!important;
+}
+
+/* Shrink the full page when the validation panel is open */
+.page{
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding:20px 16px 42px;
+  transition:
+    width .42s cubic-bezier(.22,1,.36,1),
+    padding .42s cubic-bezier(.22,1,.36,1);
+}
+.page.drawer-open{
+  width:calc(100% - min(50vw,760px) - 22px);
+  margin:0;
+  padding-right:10px;
+}
+
+/* Remove filter separators and distribute controls cleanly */
+.toolbar{
+  width:100%;
+  display:grid;
+  grid-template-columns:
+    minmax(145px,.85fr)
+    repeat(4,minmax(105px,.72fr))
+    minmax(145px,.9fr)
+    minmax(145px,.95fr)
+    minmax(130px,.85fr)
+    minmax(190px,1.2fr);
+  align-items:center;
+  gap:9px;
+}
+.toolbar #allBtn,
+.toolbar #groupBtn,
+.toolbar #agent,
+.toolbar .search-wrap{
+  margin-left:0!important;
+  padding-left:0;
+}
+.toolbar #allBtn:before,
+.toolbar #groupBtn:before,
+.toolbar #agent:before{
+  content:none!important;
+  display:none!important;
+}
+.toolbar .control,
+.toolbar .filter-btn,
+.toolbar .month-wrap,
+.toolbar .search-wrap{
+  width:100%;
+  min-width:0;
+}
+.toolbar .month-wrap select,
+.toolbar .search{
+  width:100%;
+}
+
+/* Make status, Ticket label, and Ticket ID visually equal */
+.ticket-header-line{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+}
+.ticket-header-line .badge,
+.ticket-header-line h2,
+.ticket-header-line .ticket-copy,
+.ticket-header-line .ticket-copy-number{
+  font-size:14px!important;
+  line-height:18px!important;
+  font-weight:900!important;
+}
+.ticket-header-line .badge{
+  padding:6px 10px!important;
+}
+.ticket-header-line h2{
+  display:flex!important;
+  align-items:center!important;
+  gap:7px!important;
+  margin:0!important;
+  overflow:visible!important;
+  white-space:nowrap!important;
+  text-overflow:clip!important;
+}
+.ticket-header-line .ticket-copy{
+  padding:5px 7px!important;
+}
+
+@media(max-width:1200px){
+  .toolbar{
+    grid-template-columns:repeat(5,minmax(110px,1fr));
+  }
+  .toolbar .search-wrap{
+    grid-column:4 / -1;
+  }
+}
+@media(max-width:860px){
+  .page.drawer-open{
+    width:100%;
+    padding-right:16px;
+  }
+  .toolbar{
+    display:flex;
+    flex-wrap:wrap;
+  }
+  .toolbar>*{
+    flex:1 1 145px;
+  }
+  .workspace{
+    width:calc(100vw - 24px);
+    right:12px;
+  }
+}
+</style>
+
+<style>
+/* V1.04 complete UI refinements */
+
+/* Two-line filter bar when validation drawer is open */
+.page.drawer-open .toolbar{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:8px!important;
+  align-items:center!important;
+}
+.page.drawer-open .toolbar > *{
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+}
+.page.drawer-open .toolbar .month-wrap select,
+.page.drawer-open .toolbar .search,
+.page.drawer-open .toolbar .search-wrap{
+  width:100%!important;
+}
+.page.drawer-open .toolbar .search-wrap{
+  grid-column:auto!important;
+}
+
+/* User/clock card flexes with the reduced header width */
+.header{min-width:0}
+.brand-wrap{flex:1 1 auto;min-width:0}
+.user-actions{flex:0 1 auto;min-width:0}
+.identity-time-card{min-width:0;max-width:100%;flex:0 1 auto}
+.user-card{min-width:0!important;width:clamp(175px,16vw,240px);padding:10px 13px!important}
+.user-card strong{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.user-time{min-width:0!important;width:clamp(160px,14vw,205px);padding:10px 12px!important}
+.page.drawer-open .header{gap:10px}
+.page.drawer-open .brand-wrap{gap:10px}
+.page.drawer-open .brand h1{font-size:clamp(21px,2vw,30px)}
+.page.drawer-open .brand p{font-size:11px}
+.page.drawer-open .logos{gap:8px;padding-right:9px}
+.page.drawer-open .logos img:first-child{max-width:105px!important;height:38px!important}
+.page.drawer-open .logos img:last-child{max-width:72px!important;height:36px!important;padding-left:10px!important}
+.page.drawer-open .user-card{width:clamp(145px,13vw,185px);padding:9px 10px!important}
+.page.drawer-open .user-time{width:clamp(135px,12vw,170px);padding:9px 9px!important}
+.page.drawer-open .time-icon{width:32px;height:32px;flex-basis:32px}
+.page.drawer-open .time-icon svg{width:26px!important;height:26px!important}
+.page.drawer-open .time-clock{font-size:14px}
+.page.drawer-open .time-date,.page.drawer-open .time-zone{font-size:10px}
+
+/* Consistent validation-panel header */
+.whead{min-height:70px;padding:14px 20px}
+.ticket-header-line{display:flex!important;align-items:center!important;gap:10px!important;min-width:0}
+.ticket-header-line .badge{
+  min-width:112px!important;
+  height:32px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:0 10px!important;
+  font-size:13px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
+.ticket-header-line h2{
+  height:32px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:7px!important;
+  margin:0!important;
+  padding:0!important;
+  font-size:13px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+}
+.ticket-header-line .ticket-copy{
+  height:32px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  padding:0 8px!important;
+  font-size:13px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
+.ticket-header-line .ticket-copy-number{
+  font-size:13px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
+.ticket-header-line .ticket-copy-icon{width:14px;height:14px}
+
+/* Soft-skill answer uses the same completed green treatment */
+#soft.filled,
+#soft:not([value=""]):valid{
+  background:#15271f!important;
+  border-color:#2c7459!important;
+  color:#eef5ff!important;
+}
+#f-soft:has(#soft.filled){
+  background:transparent;
+}
+
+@media(max-width:1150px){
+  .page.drawer-open .header{align-items:flex-start;flex-wrap:wrap}
+  .page.drawer-open .user-actions{margin-left:auto}
+}
+@media(max-width:860px){
+  .page.drawer-open .toolbar{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .user-card,.user-time{width:auto}
+}
+</style>
+
+<script>
+(function(){
+  function syncSoftSkillGreen(){
+    var soft=E('soft');
+    if(soft){soft.classList.toggle('filled',S(soft.value).trim()!=='');}
+  }
+  document.addEventListener('change',function(event){
+    if(event.target&&event.target.id==='soft'){syncSoftSkillGreen();}
+  });
+  var priorOpenTicket=window.openTicket;
+  window.openTicket=function(i){
+    priorOpenTicket(i);
+    syncSoftSkillGreen();
+  };
+})();
+</script>
+
+<style>
+/* V1.05 targeted final corrections */
+
+/* Exactly two filter rows while the validation panel is open: 5 + 4 */
+.page.drawer-open .toolbar{
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  grid-auto-flow:row!important;
+  gap:8px!important;
+  align-items:center!important;
+}
+.page.drawer-open .toolbar > *{
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  grid-column:auto!important;
+}
+.page.drawer-open .toolbar .month-wrap,
+.page.drawer-open .toolbar .month-wrap select,
+.page.drawer-open .toolbar .search-wrap,
+.page.drawer-open .toolbar .search{
+  width:100%!important;
+  min-width:0!important;
+}
+
+/* Panel header: Status, Ticket label, and Ticket ID use identical typography */
+.ticket-header-line{
+  display:flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  min-width:0!important;
+}
+.ticket-header-line .badge,
+.ticket-header-line .ticket-label,
+.ticket-header-line .ticket-copy,
+.ticket-header-line .ticket-copy-number{
+  font-family:Arial,sans-serif!important;
+  font-size:13px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.25px!important;
+}
+.ticket-header-line .badge,
+.ticket-header-line .ticket-label,
+.ticket-header-line .ticket-copy{
+  height:32px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+}
+.ticket-header-line .badge{
+  justify-content:center!important;
+  min-width:112px!important;
+  padding:0 10px!important;
+}
+.ticket-header-line h2{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:7px!important;
+  height:32px!important;
+  margin:0!important;
+  padding:0!important;
+  font-size:13px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+}
+.ticket-header-line .ticket-label{
+  padding:0!important;
+}
+.ticket-header-line .ticket-copy{
+  padding:0 8px!important;
+}
+.ticket-header-line .ticket-copy-icon{
+  width:14px!important;
+  height:14px!important;
+}
+
+/* Soft Skills: normal when empty, green only after a real selection */
+#soft:not(.filled){
+  background:#101a28!important;
+  border-color:#31445f!important;
+  color:#eef5ff!important;
+}
+#soft.filled{
+  background:#15271f!important;
+  border-color:#2c7459!important;
+  color:#eef5ff!important;
+}
+
+@media(max-width:860px){
+  .page.drawer-open .toolbar{
+    grid-template-columns:repeat(5,minmax(0,1fr))!important;
+    overflow-x:auto;
+  }
+}
+</style>
+
+<script>
+(function(){
+  var previousOpenTicketV105=window.openTicket;
+  window.openTicket=function(i){
+    previousOpenTicketV105(i);
+    var current=APP.tickets[i];
+    if(current){
+      E('wTitle').innerHTML='<span class="ticket-label">Ticket</span>'+ticketCopyHtml(current.ticketId);
+    }
+    var soft=E('soft');
+    if(soft){
+      soft.classList.toggle('filled',S(soft.value).trim()!=='');
+    }
+  };
+
+  document.addEventListener('change',function(event){
+    if(event.target&&event.target.id==='soft'){
+      event.target.classList.toggle('filled',S(event.target.value).trim()!=='');
+    }
+  });
+})();
+</script>
+
+<style>
+/* V1.06 definitive header and Soft Skills correction */
+
+/* Header typography is intentionally identical across all three elements. */
+#wStatus.panel-header-item,
+#wTitle .panel-ticket-label,
+#wTitle .panel-ticket-id{
+  font-family:Arial,sans-serif!important;
+  font-size:13px!important;
+  font-weight:900!important;
+  line-height:32px!important;
+  letter-spacing:.25px!important;
+}
+#wStatus.panel-header-item{
+  height:32px!important;
+  min-width:112px!important;
+  padding:0 10px!important;
+  display:inline-flex!important;
+  justify-content:center!important;
+  align-items:center!important;
+}
+#wTitle.panel-ticket-heading{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:8px!important;
+  height:32px!important;
+  margin:0!important;
+  padding:0!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+}
+#wTitle .panel-ticket-label{
+  display:inline-block!important;
+  height:32px!important;
+  color:#fff!important;
+}
+#wTitle .panel-ticket-id{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:6px!important;
+  height:32px!important;
+  padding:0 8px!important;
+  border:1px solid #344d6f!important;
+  border-radius:7px!important;
+  background:#111f32!important;
+  color:#bdd6f6!important;
+  cursor:pointer!important;
+}
+#wTitle .panel-ticket-id:hover{
+  color:#fff!important;
+  border-color:#4d8fff!important;
+  background:#172d4b!important;
+}
+#wTitle .panel-ticket-id svg{
+  width:14px!important;
+  height:14px!important;
+  fill:none!important;
+  stroke:currentColor!important;
+  stroke-width:1.8!important;
+}
+
+/* Empty Soft Skills stays neutral. A selected value alone turns green. */
+#f-soft #soft:not(.filled){
+  background:#101a28!important;
+  border-color:#31445f!important;
+  color:#eef5ff!important;
+}
+#f-soft #soft.filled{
+  background:#15271f!important;
+  border-color:#2c7459!important;
+  color:#eef5ff!important;
+}
+</style>
+
+<script>
+(function(){
+  function panelCopyIcon(){
+    return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></svg>';
+  }
+
+  function rebuildPanelHeader(){
+    var ticket=current();
+    var status=E('wStatus');
+    var title=E('wTitle');
+    if(!ticket||!status||!title){return;}
+
+    status.classList.add('panel-header-item');
+    title.className='panel-ticket-heading';
+    title.innerHTML=
+      '<span class="panel-ticket-label">Ticket</span>'+
+      '<span class="panel-ticket-id" data-ticket-id="'+esc(ticket.ticketId)+'" title="Click to copy ticket ID">'+
+        '<span>'+esc(ticket.ticketId)+'</span>'+panelCopyIcon()+
+      '</span>';
+
+    var copy=title.querySelector('.panel-ticket-id');
+    copy.addEventListener('click',function(){
+      var id=copy.getAttribute('data-ticket-id');
+      function flash(){
+        var number=copy.querySelector('span');
+        number.textContent='Copied!';
+        setTimeout(function(){number.textContent=id;},900);
+      }
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(id).then(flash).catch(function(){
+          var area=document.createElement('textarea');area.value=id;document.body.appendChild(area);area.select();document.execCommand('copy');area.remove();flash();
+        });
+      }else{
+        var area=document.createElement('textarea');area.value=id;document.body.appendChild(area);area.select();document.execCommand('copy');area.remove();flash();
+      }
+    });
+  }
+
+  function syncSoft(){
+    var soft=E('soft');
+    if(soft){soft.classList.toggle('filled',S(soft.value).trim()!=='');}
+  }
+
+  var openTicketV106=window.openTicket;
+  window.openTicket=function(i){
+    openTicketV106(i);
+    rebuildPanelHeader();
+    syncSoft();
+  };
+
+  document.addEventListener('change',function(event){
+    if(event.target&&event.target.id==='soft'){syncSoft();}
+  });
+})();
+</script>
+
+<style>
+/* V1.07 optical header match */
+#wStatus.panel-header-item,
+#wTitle.panel-ticket-heading,
+#wTitle .panel-ticket-label,
+#wTitle .panel-ticket-id,
+#wTitle .panel-ticket-id > span{
+  font-family:Arial,sans-serif!important;
+  font-size:14px!important;
+  font-weight:900!important;
+  line-height:32px!important;
+  letter-spacing:.25px!important;
+}
+#wTitle .panel-ticket-label{
+  display:inline-flex!important;
+  align-items:center!important;
+  height:32px!important;
+  color:#fff!important;
+  text-transform:none!important;
+}
+</style>
+
+<script>
+(function(){
+  var openTicketV107=window.openTicket;
+  window.openTicket=function(i){
+    openTicketV107(i);
+    var ticket=APP.tickets[i];
+    var status=E('wStatus');
+    var title=E('wTitle');
+    if(!ticket||!status||!title){return;}
+    status.classList.add('panel-header-item');
+    status.style.fontSize='14px';
+    status.style.fontWeight='900';
+    status.style.lineHeight='32px';
+    title.className='panel-ticket-heading';
+    title.style.fontSize='14px';
+    title.style.fontWeight='900';
+    title.innerHTML=
+      '<span class="panel-ticket-label" style="font-size:14px;font-weight:900;line-height:32px">Ticket</span>'+
+      '<span class="panel-ticket-id" data-ticket-id="'+esc(ticket.ticketId)+'" style="font-size:14px;font-weight:900;line-height:32px">'+
+        '<span style="font-size:14px;font-weight:900;line-height:32px">'+esc(ticket.ticketId)+'</span>'+
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></svg>'+
+      '</span>';
+    var copy=title.querySelector('.panel-ticket-id');
+    copy.addEventListener('click',function(){
+      var id=copy.getAttribute('data-ticket-id');
+      var number=copy.querySelector('span');
+      function flash(){number.textContent='Copied!';setTimeout(function(){number.textContent=id},900)}
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(id).then(flash)}
+    });
+  };
+})();
+</script>
+</body>
+</html>
